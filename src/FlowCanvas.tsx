@@ -10,8 +10,9 @@ import 'reactflow/dist/style.css';
 import { useStore } from './store';
 import { AgentNode } from './components/AgentNode';
 import { ToolNode, MemoryNode } from './components/MiscNodes';
-import { Bot, Wrench, Database, Plus, Play, Save, Share2 } from 'lucide-react';
+import { Bot, Wrench, Database, Plus, Play, Save, Share2, Shield } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useNavigate } from 'react-router-dom';
 
 const nodeTypes = {
   agent: AgentNode,
@@ -21,6 +22,7 @@ const nodeTypes = {
 
 function FlowInner() {
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, setSelectedNode, addNode } = useStore();
+  const navigate = useNavigate();
 
   const handlePaneClick = useCallback(() => {
     setSelectedNode(null);
@@ -76,6 +78,10 @@ function FlowInner() {
            <SidebarItem icon={<Bot size={20} />} label="Agent" onClick={() => addNode('agent', { x: 500, y: 300 })} />
            <SidebarItem icon={<Wrench size={20} />} label="Tool" onClick={() => addNode('tool', { x: 500, y: 300 })} />
            <SidebarItem icon={<Database size={20} />} label="Memory" onClick={() => addNode('memory', { x: 500, y: 300 })} />
+           
+           <div className="flex-1" />
+           <div className="w-8 h-px bg-zinc-800" />
+           <SidebarItem icon={<Shield size={20} />} label="Admin" onClick={() => navigate('/admin/login')} />
         </aside>
 
         <main className="flex-1 relative">

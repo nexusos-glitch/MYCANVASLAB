@@ -19,12 +19,20 @@ export interface AppState {
   nodes: Node[];
   edges: Edge[];
   selectedNodeId: string | null;
+  isAuthenticated: boolean;
+  apiKeys: {
+    gemini?: string;
+    openai?: string;
+  };
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
   setSelectedNode: (nodeId: string | null) => void;
   addNode: (type: NodeType, position: { x: number, y: number }) => void;
   updateNodeData: (nodeId: string, data: any) => void;
+  login: (email: string, pass: string) => boolean;
+  logout: () => void;
+  updateApiKeys: (keys: { gemini?: string; openai?: string }) => void;
 }
 
 export const useStore = create<AppState>((set, get) => ({
@@ -38,6 +46,11 @@ export const useStore = create<AppState>((set, get) => ({
   ],
   edges: [],
   selectedNodeId: null,
+  isAuthenticated: false,
+  apiKeys: {
+    gemini: '',
+    openai: '',
+  },
 
   onNodesChange: (changes: NodeChange[]) => {
     set({
@@ -84,5 +97,21 @@ export const useStore = create<AppState>((set, get) => ({
         return node;
       }),
     });
+  },
+
+  login: (email, pass) => {
+    if (email === 'mycanvas@utubemail.com' && pass === 'admin123') {
+      set({ isAuthenticated: true });
+      return true;
+    }
+    return false;
+  },
+
+  logout: () => {
+    set({ isAuthenticated: false });
+  },
+
+  updateApiKeys: (keys) => {
+    set({ apiKeys: { ...get().apiKeys, ...keys } });
   },
 }));

@@ -4,10 +4,13 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import FlowCanvas from './FlowCanvas';
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
 
-export default function App() {
+function MainApp() {
   const [booting, setBooting] = useState(true);
   const [bootText, setBootText] = useState('Initializing Terminal...');
 
@@ -76,10 +79,22 @@ export default function App() {
             animate={{ opacity: 1 }}
             className="w-full h-full"
           >
-            <FlowCanvas />
+            <Routes>
+              <Route path="/" element={<FlowCanvas />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            </Routes>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <MainApp />
+    </BrowserRouter>
   );
 }
