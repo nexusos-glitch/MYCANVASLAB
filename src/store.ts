@@ -15,6 +15,14 @@ import {
 
 export type NodeType = 'agent' | 'tool' | 'memory' | 'trigger';
 
+export interface AuditLog {
+  id: string;
+  timestamp: string;
+  action: string;
+  details: string;
+  status: 'info' | 'warning' | 'security';
+}
+
 export interface AppState {
   nodes: Node[];
   edges: Edge[];
@@ -24,6 +32,7 @@ export interface AppState {
     gemini?: string;
     openai?: string;
   };
+  auditLogs: AuditLog[];
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
@@ -33,6 +42,7 @@ export interface AppState {
   login: (email: string, pass: string) => boolean;
   logout: () => void;
   updateApiKeys: (keys: { gemini?: string; openai?: string }) => void;
+  addAuditLog: (action: string, details: string, status: AuditLog['status']) => void;
 }
 
 export const useStore = create<AppState>((set, get) => ({
@@ -51,6 +61,7 @@ export const useStore = create<AppState>((set, get) => ({
     gemini: '',
     openai: '',
   },
+  auditLogs: [],
 
   onNodesChange: (changes: NodeChange[]) => {
     set({
@@ -99,19 +110,34 @@ export const useStore = create<AppState>((set, get) => ({
     });
   },
 
+  addAuditLog: (action, details, status) => {
+    const newLog: AuditLog = {
+      id: Math.random().toString(36).substr(2, 9),
+      timestamp: new Date().toLocaleTimeString(),
+      action,
+      details,
+      status,
+    };
+    set({ auditLogs: [newLog, ...get().auditLogs].slice(0, 50) });
+  },
+
   login: (email, pass) => {
     if (email === 'mycanvas@utubemail.com' && pass === 'admin123') {
       set({ isAuthenticated: true });
+      get().addAuditLog('User Login', `Session started for ${email}`, 'security');
       return true;
     }
+    get().addAuditLog('Login Failed', `Unauthorized attempt from ${email}`, 'security');
     return false;
   },
 
   logout: () => {
+    get().addAuditLog('User Logout', 'System session terminated by user', 'info');
     set({ isAuthenticated: false });
   },
 
   updateApiKeys: (keys) => {
+    get().addAuditLog('API Update', 'Credentials modified in vault', 'warning');
     set({ apiKeys: { ...get().apiKeys, ...keys } });
   },
 }));
