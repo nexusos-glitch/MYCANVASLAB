@@ -1,0 +1,6 @@
+{
+  "name": "MyCanvasLab",
+  "description": "An advanced AI agent creation platform with a futuristic cinematic canvas interface for building workflows and automations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["AI Agent Orchestration", "Visual Workflow Builder", "Multi-Agent Systems"]
+}
