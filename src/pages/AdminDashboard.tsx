@@ -74,9 +74,14 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-black flex flex-col">
       <header className="h-16 glass-panel border-b border-zinc-800 px-8 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Shield className="text-brand-red" size={20} />
-          <h1 className="text-sm font-bold tracking-[0.2em] uppercase text-white">Central Intelligence HQ</h1>
+        <div 
+          className="flex items-center gap-3 cursor-pointer group"
+          onClick={() => navigate('/')}
+        >
+          <div className="p-1.5 bg-brand-red/10 rounded border border-brand-red/20 group-hover:bg-brand-red/20 transition-colors">
+            <Shield className="text-brand-red" size={16} />
+          </div>
+          <h1 className="text-xs font-bold tracking-[0.2em] uppercase text-white group-hover:text-brand-red transition-all">Central Intelligence HQ</h1>
         </div>
         <div className="flex items-center gap-4">
           <button 
@@ -94,9 +99,25 @@ export default function AdminDashboard() {
           </button>
         </div>
       </header>
+      
+      {/* Secondary Sub-nav */}
+      <nav className="h-10 bg-zinc-900/30 border-b border-zinc-800/50 flex items-center px-8 gap-6 backdrop-blur-sm sticky top-16 z-40">
+        <a href="#api-config" className="text-[10px] uppercase font-mono tracking-widest text-zinc-500 hover:text-brand-red transition-colors flex items-center gap-2">
+          <Cpu size={12} /> Sync_Protocol
+        </a>
+        <a href="#system-health" className="text-[10px] uppercase font-mono tracking-widest text-zinc-500 hover:text-emerald-400 transition-colors flex items-center gap-2">
+          <Activity size={12} /> Node_Diagnostics
+        </a>
+        <a href="#usage-analytics" className="text-[10px] uppercase font-mono tracking-widest text-zinc-500 hover:text-sky-400 transition-colors flex items-center gap-2">
+          <BarChart3 size={12} /> Resource_Metrics
+        </a>
+        <a href="#audit-log" className="text-[10px] uppercase font-mono tracking-widest text-zinc-500 hover:text-orange-500 transition-colors flex items-center gap-2">
+          <History size={12} /> Security_Ledger
+        </a>
+      </nav>
 
       <main className="flex-1 max-w-4xl w-full mx-auto p-12 space-y-12">
-        <section>
+        <section id="api-config">
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-white mb-2">Neural API Sync</h2>
             <p className="text-zinc-500 text-sm">Configure your large language model provider credentials safely. Keys are stored in the temporary session environment.</p>
@@ -104,18 +125,32 @@ export default function AdminDashboard() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Gemini Config */}
-            <div className="glass-panel p-6 rounded-xl border border-zinc-800 space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="p-2 bg-brand-red/10 rounded-lg border border-brand-red/20 text-brand-red">
-                    <Cpu size={18} />
+            <div className="glass-panel rounded-xl border border-zinc-800 overflow-hidden flex flex-col">
+              <div className="h-24 w-full relative overflow-hidden group">
+                <img 
+                  src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=800" 
+                  alt="Neural Engine"
+                  className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+                <div className="absolute bottom-3 left-6">
+                  <div className="flex items-center gap-2">
+                    <div className="p-1.5 bg-brand-red/10 rounded-lg border border-brand-red/20 text-brand-red">
+                      <Cpu size={14} />
+                    </div>
+                    <span className="text-xs font-bold text-white tracking-widest uppercase">Protocol Alpha</span>
                   </div>
+                </div>
+              </div>
+              
+              <div className="p-6 space-y-4">
+                <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-sm font-bold text-white">Google Gemini</h3>
                     <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">Multi-modal AI</p>
                   </div>
                 </div>
-              </div>
 
               <div className="space-y-1.5">
                 <label className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest flex items-center justify-between">
@@ -142,14 +177,30 @@ export default function AdminDashboard() {
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* OpenAI Config */}
-            <div className="glass-panel p-6 rounded-xl border border-zinc-800 space-y-4 shadow-[0_0_40px_rgba(34,197,94,0.02)]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="p-2 bg-emerald-500/10 rounded-lg border border-emerald-500/20 text-emerald-400">
-                    <Bot size={18} />
+          {/* OpenAI Config */}
+            <div className="glass-panel rounded-xl border border-zinc-800 overflow-hidden flex flex-col shadow-[0_0_40px_rgba(34,197,94,0.02)]">
+              <div className="h-24 w-full relative overflow-hidden group">
+                <img 
+                  src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" 
+                  alt="GPT Core"
+                  className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+                <div className="absolute bottom-3 left-6">
+                  <div className="flex items-center gap-2">
+                    <div className="p-1.5 bg-emerald-500/10 rounded-lg border border-emerald-500/20 text-emerald-400">
+                      <Bot size={14} />
+                    </div>
+                    <span className="text-xs font-bold text-white tracking-widest uppercase">Protocol Omega</span>
                   </div>
+                </div>
+              </div>
+
+              <div className="p-6 space-y-4">
+                <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-sm font-bold text-white">OpenAI GPT</h3>
                     <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-widest">GPT-4o Engine</p>
@@ -197,7 +248,7 @@ export default function AdminDashboard() {
           </div>
         </section>
 
-        <section className="pt-12 border-t border-zinc-800/50">
+        <section id="system-health" className="pt-12 border-t border-zinc-800/50">
            <div className="mb-6">
             <h2 className="text-lg font-bold text-white mb-1">System Health</h2>
             <p className="text-zinc-500 text-xs font-mono">Real-time diagnostics from Nexus OS nodes.</p>
@@ -219,7 +270,7 @@ export default function AdminDashboard() {
             ))}
           </div>
 
-          <div className="glass-panel p-8 rounded-xl border border-zinc-800 shadow-2xl">
+          <div id="usage-analytics" className="glass-panel p-8 rounded-xl border border-zinc-800 shadow-2xl">
             <div className="flex items-center justify-between mb-8">
               <div>
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
@@ -306,7 +357,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="mt-12">
+          <div id="audit-log" className="mt-12">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
               <div className="flex items-center gap-3">
                 <History className="text-brand-red" size={20} />

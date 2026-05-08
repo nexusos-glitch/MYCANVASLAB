@@ -36,8 +36,11 @@ function FlowInner() {
     <div className="relative w-full h-screen bg-black overflow-hidden flex flex-col">
       {/* Cinematic Header */}
       <header className="h-16 glass-panel border-b border-zinc-800 z-50 flex items-center justify-between px-6 shrink-0 shadow-2xl">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-gradient-to-br from-brand-red to-orange-600 rounded-lg flex items-center justify-center shadow-lg shadow-brand-red/20 rotate-3">
+        <div 
+          className="flex items-center gap-4 cursor-pointer"
+          onClick={() => navigate('/')}
+        >
+          <div className="w-10 h-10 bg-gradient-to-br from-brand-red to-orange-600 rounded-lg flex items-center justify-center shadow-lg shadow-brand-red/20 rotate-3 transition-transform hover:scale-105 active:scale-95">
             <span className="font-bold text-xl text-white tracking-tighter italic">C</span>
           </div>
           <div>
